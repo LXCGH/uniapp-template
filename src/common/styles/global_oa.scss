@@ -1,0 +1,248 @@
+$color-primary: #2979ff;
+$color-primary-50: rgba(255, 211, 0, 0.6);
+$color-primary-30: rgba(255, 211, 0, 0.05);
+$color-primary-0: #010101;
+
+.nav-item-bar {
+  background-color: $color-primary;
+}
+// 记录页面
+.history-wrap {
+  .human-reply-voice {
+    background-color: $color-primary-50;
+  }
+  .human-reply-text {
+    background-color: $color-primary-50;
+  }
+}
+// 记录页面 end
+
+// 登录页面
+.login-page {
+  .login-button {
+    background: $color-primary;
+    color: $color-primary-0;
+  }
+
+  .privacy-link {
+    color: $color-primary;
+  }
+
+  .content .des .link {
+    color: $color-primary;
+  }
+
+  .btns .agree {
+    background: $color-primary;
+    color: $color-primary-0;
+  }
+
+  checkbox .wx-checkbox-input.wx-checkbox-input-checked {
+    border-color: $color-primary;
+    background-color: $color-primary;
+  }
+}
+// 登录页面 end
+
+.ai-help-page,
+.login-page {
+  checkbox .wx-checkbox-input.wx-checkbox-input-checked {
+    border-color: $color-primary;
+    background-color: $color-primary;
+  }
+}
+
+// 编辑信息页面
+.personal-edit-page {
+  .page-button,
+  button {
+    background: $color-primary;
+    color: $color-primary-0;
+  }
+}
+
+// 编辑信息页面 end
+
+// 未添加玩具
+.not-found-comp {
+  .button {
+    background-color: $color-primary;
+    color: $color-primary-0;
+  }
+}
+// 未添加玩具 end
+
+.modal-btn {
+  &.confirm {
+    background: $color-primary;
+  }
+}
+.btn-text {
+  .confirm & {
+    color: $color-primary-0;
+  }
+}
+
+.account-comp {
+  .login-button {
+    background: $color-primary;
+    color: #fff;
+  }
+}
+
+.wifi-name {
+  &.selected-wifi-name {
+    color: $color-primary;
+  }
+}
+
+.prohibit-use-times {
+  .save-btn {
+    background: $color-primary;
+    color: $color-primary-0;
+  }
+}
+
+.net-work-status {
+  background-color: $color-primary-30;
+  border: 1rpx solid $color-primary;
+}
+
+.net-work-status-point {
+  background-color: $color-primary;
+}
+
+.net-work-status-text {
+  color: $color-primary;
+}
+
+.family-account {
+  .submit-btn {
+    background: $color-primary;
+    color: $color-primary-0;
+  }
+}
+
+.member-page {
+  .button-wrap {
+    color: $color-primary;
+  }
+}
+
+.modify-toy-name {
+  .save-btn {
+    background: $color-primary;
+    color: $color-primary-0;
+  }
+}
+
+.toy-status {
+  // 在线状态
+  .online {
+    background-color: $color-primary-30;
+    border: 1rpx solid $color-primary;
+    .tag-point {
+      background-color: $color-primary;
+    }
+    .tag-text {
+      color: $color-primary;
+    }
+  }
+}
+
+.toy-detail {
+  .renet-container {
+    border: 1rpx solid $color-primary;
+  }
+
+  .renet-txt {
+    color: $color-primary;
+  }
+
+  .toggle-container {
+    background: $color-primary;
+    color: $color-primary-0;
+  }
+
+  .toggle-txt {
+    color: $color-primary-0;
+  }
+}
+
+.prohibit-use-repeat {
+  .save-btn {
+    background: $color-primary;
+    color: $color-primary-0;
+  }
+}
+
+.not-found-page {
+  .button {
+    background-color: $color-primary;
+    color: $color-primary-0;
+  }
+}
+
+.secret-character {
+  .status {
+    border: 1rpx solid $color-primary;
+    background-color: $color-primary-30;
+  }
+
+  .status-text {
+    color: $color-primary;
+  }
+}
+
+.user-feedback {
+  .type-btn-selected {
+    background: $color-primary;
+    color: $color-primary-0;
+  }
+
+  .submit-btn {
+    background: $color-primary;
+    color: $color-primary-0;
+  }
+}
+
+.help-page {
+  .green-bar {
+    width: 96rpx;
+    height: 10rpx;
+    background-color: $color-primary;
+    border-radius: 5rpx;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+  }
+}
+
+.AI-help-btn {
+  margin-top: 40rpx;
+  margin-bottom: -5rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 138rpx;
+  height: 46rpx;
+  border-radius: 46rpx;
+  background: url("../../static/images/app/ai-help-say.png") no-repeat center
+    center;
+  background-size: 100% 100%;
+  text {
+    display: none;
+    font-size: 24rpx;
+    background: linear-gradient(180deg, #00d947 0%, #01b5d8 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-family: "PingFang SC";
+    font-weight: 500;
+    letter-spacing: -0.6px;
+  }
+}
+
+.AI-icon {
+  display: none;
+}
