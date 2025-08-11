@@ -1,0 +1,466 @@
+.nav-item {
+  padding: 0 4rpx;
+  margin-right: 50rpx;
+  display: inline-flex; // 修改为inline-flex
+  flex-shrink: 0; // 新增防止元素收缩
+  position: relative;
+}
+
+.nav-text {
+  font-size: 32rpx;
+  color: #666;
+  z-index: 1;
+  position: relative;
+}
+
+.nav-item.active .nav-text {
+  font-size: 40rpx;
+  font-weight: 500;
+  color: #000;
+}
+
+.nav-item-bar {
+  width: 50rpx;
+  height: 12rpx;
+  background-color: #00d550;
+  border-radius: 6rpx;
+  position: absolute;
+  bottom: 4rpx;
+  left: 50%;
+  margin-left: -25rpx;
+}
+
+// 记录页面
+.history-wrap {
+  .AI-reply-voice {
+    background-color: #fff;
+  }
+
+  .AI-reply-text {
+    background-color: #fff;
+  }
+
+  .human-reply-voice {
+    background-color: #fff;
+  }
+
+  .human-reply-text {
+    background-color: #fff;
+  }
+}
+// 记录页面 end
+
+// 登录页面
+.login-page {
+  .login-button {
+    width: 670rpx;
+    height: 98rpx;
+    display: flex;
+    place-content: center;
+    place-items: center;
+    flex-shrink: 0;
+    border-radius: 20rpx;
+    background: #00d550;
+    text-align: center;
+    color: #fff;
+    font-weight: 500;
+    font-size: 34rpx;
+    line-height: 100%;
+    border: none !important;
+  }
+  .privacy-link {
+    color: #00d55b;
+  }
+
+  .content .des .link {
+    color: #00d550;
+    text-decoration: underline;
+  }
+
+  .btns .agree {
+    background: #00d550;
+    color: #fff;
+    border: none !important;
+  }
+}
+// 登录页面 end
+.ai-help-page,
+.login-page {
+  checkbox .wx-checkbox-input {
+    margin-top: -4rpx;
+    width: 32rpx;
+    height: 32rpx;
+    border-radius: 50%;
+  }
+  // 复选框选中样式
+  checkbox .wx-checkbox-input.wx-checkbox-input-checked {
+    border-color: #00da77;
+    background-color: #00da77;
+  }
+  // 复选框选中之后对号的样式
+  checkbox .wx-checkbox-input.wx-checkbox-input-checked::before {
+    color: #fff;
+    font-size: 24rpx;
+  }
+}
+
+// 编辑信息页面
+.personal-edit-page {
+  .page-button,
+  button {
+    position: fixed;
+    bottom: 30rpx;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 684rpx;
+    height: 88rpx;
+    line-height: 88rpx;
+    border-radius: 20rpx;
+    border: none;
+    background: #00d550;
+    color: #fff;
+    font-weight: 500;
+    font-size: 34rpx;
+  }
+
+  .page-button {
+    bottom: 80rpx;
+  }
+}
+
+// 未添加玩具
+.not-found-comp {
+  .button {
+    width: 200rpx;
+    height: 88rpx;
+    border-radius: 20rpx;
+    background-color: #00d550;
+    color: #fff;
+    font-size: 32rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+  }
+}
+// 未添加玩具 end
+
+.modal-btn {
+  &.confirm {
+    background: #00d550;
+  }
+}
+
+.btn-text {
+  .confirm & {
+    color: #fff;
+  }
+}
+
+.account-comp {
+  .login-button {
+    width: 242rpx;
+    height: 80rpx;
+    line-height: 80rpx;
+    border-radius: 20rpx;
+    background: #00d55b;
+    color: #fff;
+    text-align: center;
+    font-family: "PingFang SC";
+    font-size: 36rpx;
+    font-style: normal;
+    font-weight: 500;
+    letter-spacing: -0.6px;
+  }
+}
+
+.wifi-name {
+  &.selected-wifi-name {
+    color: #00d550;
+  }
+}
+
+.prohibit-use-times {
+  .save-btn {
+    position: fixed;
+    bottom: 88rpx;
+    width: 686rpx;
+    height: 88rpx;
+    background: #00d550;
+    border-radius: 20rpx;
+    color: #fff;
+    font-size: 34rpx;
+    font-weight: 500;
+    line-height: 88rpx;
+    text-align: center;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+.net-work-status {
+  margin-left: 1rpx;
+  background-color: rgba(0, 213, 80, 0.1);
+  border: 1rpx solid #00d550;
+}
+
+.net-work-status-point {
+  width: 10rpx;
+  height: 10rpx;
+  border-radius: 50%;
+  background-color: #00d550;
+  margin-right: 10rpx;
+}
+
+.net-work-status-text {
+  color: #00d550;
+  font-size: 24rpx;
+  font-weight: 400;
+}
+
+.family-account {
+  .submit-btn {
+    position: fixed;
+    bottom: 80rpx;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 686rpx;
+    height: 88rpx;
+    border-radius: 20rpx;
+    background: #00d550;
+    color: #fff;
+    font-family: "PingFang SC";
+    font-size: 34rpx;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    letter-spacing: -0.6rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+  }
+}
+
+.member-page {
+  .button-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 109rpx;
+    margin: 24rpx 0;
+    background: #fff;
+    border-radius: 30rpx;
+    font-size: 32rpx;
+    color: #00d550;
+  }
+}
+
+.modify-toy-name {
+  .save-btn {
+    width: 686rpx;
+    height: 88rpx;
+    flex-shrink: 0;
+    border-radius: 20rpx;
+    background: #00d550;
+    color: #fff;
+    font-family: "PingFang SC";
+    font-size: 34rpx;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    letter-spacing: -0.6rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 80rpx;
+    z-index: 10;
+  }
+}
+
+.toy-status {
+  // 在线状态
+  .online {
+    border: 1rpx solid #00d550;
+    background: rgba(0, 213, 80, 0.1);
+    .tag-point {
+      background-color: #00d550;
+    }
+    .tag-text {
+      color: #00d550;
+    }
+  }
+}
+
+.toy-detail {
+  .renet-container {
+    display: flex;
+    border: 1rpx solid #00d550;
+    border-radius: 30rpx;
+    height: 50rpx;
+    width: 198rpx;
+    justify-content: center;
+    align-items: center;
+    margin-top: 33rpx;
+  }
+
+  .renet-txt {
+    color: #00d550;
+    font-size: 28rpx;
+  }
+
+  .toggle-container {
+    display: flex;
+    background: #00d550;
+    border-radius: 20rpx;
+    height: 88rpx;
+    position: fixed;
+    bottom: 100rpx;
+    left: 32rpx;
+    right: 32rpx;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .toggle-txt {
+    color: #fff;
+    font-size: 34rpx;
+    font-weight: 500;
+  }
+}
+
+.prohibit-use-repeat {
+  .save-btn {
+    position: fixed;
+    bottom: 88rpx;
+    width: 686rpx;
+    height: 88rpx;
+    background: #00d550;
+    border-radius: 20rpx;
+    color: #fff;
+    font-size: 34rpx;
+    font-weight: 500;
+    line-height: 88rpx;
+    text-align: center;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+.not-found-page {
+  .button {
+    width: 200rpx;
+    height: 88rpx;
+    border-radius: 20rpx;
+    background-color: #00d550;
+    color: #fff;
+    font-size: 32rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+  }
+}
+
+.secret-character {
+  margin-left: 1rpx;
+  .status {
+    margin-top: 2rpx;
+    border: 1rpx solid #00d550;
+    background-color: rgba(0, 213, 80, 0.1);
+    border-radius: 15rpx;
+    width: 91rpx;
+    height: 30rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .status-text {
+    width: 90rpx;
+    height: 30rpx;
+    line-height: 30rpx;
+    text-align: center;
+    color: #00d550;
+    font-size: 20rpx;
+    font-family: "PingFang SC";
+    font-weight: 400;
+    letter-spacing: -0.6rpx;
+  }
+}
+
+.user-feedback {
+  .type-btn-selected {
+    background: #00d550;
+    color: #fff;
+  }
+
+  .submit-btn {
+    position: fixed;
+    bottom: 80rpx;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 686rpx;
+    height: 88rpx;
+    border-radius: 20rpx;
+    background: #00d550;
+    color: #fff;
+    font-family: "PingFang SC";
+    font-size: 34rpx;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    letter-spacing: -0.6rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+  }
+}
+
+.help-page {
+  .green-bar {
+    width: 96rpx;
+    height: 10rpx;
+    background-color: #00d550;
+    border-radius: 5rpx;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+  }
+}
+
+.AI-help-btn {
+  margin-top: 40rpx;
+  margin-bottom: -5rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 138rpx;
+  height: 46rpx;
+  border-radius: 46rpx;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 217, 71, 0.1) 0%,
+    rgba(1, 187, 190, 0.1) 100%
+  );
+  text {
+    font-size: 24rpx;
+    background: linear-gradient(180deg, #00d947 0%, #01b5d8 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-family: "PingFang SC";
+    font-weight: 500;
+    letter-spacing: -0.6px;
+  }
+}
+
+.AI-icon {
+  width: 24rpx;
+  height: 24rpx;
+  margin-right: 4rpx;
+}

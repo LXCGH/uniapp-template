@@ -1,0 +1,174 @@
+{
+    "name": "假期助手",
+    "appid": "__UNI__1281306",
+    "description": "BC TOYS",
+    "versionName": "1.0.0",
+    "versionCode": "100",
+    "transformPx": false,
+    "app-plus": {
+        "usingComponents": true,
+        "nvueStyleCompiler": "uni-app",
+        "compilerVersion": 3,
+        "splashscreen": {
+            "alwaysShowBeforeRender": true,
+            "waiting": true,
+            "autoclose": true,
+            "delay": 0
+        },
+        "modules": {
+            "Bluetooth": {},
+            "Geolocation": {},
+            "Record": {},
+            "VideoPlayer": {},
+            "UIWebview": {}
+        },
+        "distribute": {
+            "android": {
+                "permissions": [
+                    "<uses-permission android:name=\"android.permission.CHANGE_NETWORK_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.MOUNT_UNMOUNT_FILESYSTEMS\"/>",
+                    "<uses-permission android:name=\"android.permission.VIBRATE\"/>",
+                    "<uses-permission android:name=\"android.permission.READ_LOGS\"/>",
+                    "<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>",
+                    "<uses-feature android:name=\"android.hardware.camera.autofocus\"/>",
+                    "<uses-permission android:name=\"android.permission.WRITE_CONTACTS\"/>",
+                    "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.CAMERA\"/>",
+                    "<uses-permission android:name=\"android.permission.RECORD_AUDIO\"/>",
+                    "<uses-permission android:name=\"android.permission.GET_ACCOUNTS\"/>",
+                    "<uses-permission android:name=\"android.permission.MODIFY_AUDIO_SETTINGS\"/>",
+                    "<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.CHANGE_WIFI_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>",
+                    "<uses-permission android:name=\"android.permission.CALL_PHONE\"/>",
+                    "<uses-permission android:name=\"android.permission.FLASHLIGHT\"/>",
+                    "<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\"/>",
+                    "<uses-feature android:name=\"android.hardware.camera\"/>",
+                    "<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\"/>",
+                    "<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>",
+                    "<uses-permission android:name=\"android.permission.RECEIVE_BOOT_COMPLETED\"/>",
+                    "<action android:name=\"android.intent.action.BOOT_COMPLETED\"/>"
+                ],
+                "abiFilters": [
+                    "armeabi-v7a",
+                    "arm64-v8a",
+                    "x86"
+                ]
+            },
+            "ios": {
+                "privacyDescription": {
+                    "NSMicrophoneUsageDescription": "获取您的录音，同步聊天数据",
+                    "NSLocationAlwaysAndWhenInUseUsageDescription": "访问位置信息连接蓝牙",
+                    "NSBluetoothPeripheralUsageDescription": "通过蓝牙与设备进行交互",
+                    "NSBluetoothAlwaysUsageDescription": "通过蓝牙与设备进行交互",
+                    "NSLocalNetworkUsageDescription": "访问本地网络"
+                },
+                "dSYMs": false
+            },
+            "sdkConfigs": {
+                "geolocation": {
+                    "system": {
+                        "__platform__": [
+                            "ios",
+                            "android"
+                        ]
+                    }
+                }
+            },
+            "icons": {
+                "android": {
+                    "hdpi": "unpackage/res/icons/72x72.png",
+                    "xhdpi": "unpackage/res/icons/96x96.png",
+                    "xxhdpi": "unpackage/res/icons/144x144.png",
+                    "xxxhdpi": "unpackage/res/icons/192x192.png"
+                },
+                "ios": {
+                    "appstore": "unpackage/res/icons/1024x1024.png",
+                    "ipad": {
+                        "app": "unpackage/res/icons/76x76.png",
+                        "app@2x": "unpackage/res/icons/152x152.png",
+                        "notification": "unpackage/res/icons/20x20.png",
+                        "notification@2x": "unpackage/res/icons/40x40.png",
+                        "proapp@2x": "unpackage/res/icons/167x167.png",
+                        "settings": "unpackage/res/icons/29x29.png",
+                        "settings@2x": "unpackage/res/icons/58x58.png",
+                        "spotlight": "unpackage/res/icons/40x40.png",
+                        "spotlight@2x": "unpackage/res/icons/80x80.png"
+                    },
+                    "iphone": {
+                        "app@2x": "unpackage/res/icons/120x120.png",
+                        "app@3x": "unpackage/res/icons/180x180.png",
+                        "notification@2x": "unpackage/res/icons/40x40.png",
+                        "notification@3x": "unpackage/res/icons/60x60.png",
+                        "settings@2x": "unpackage/res/icons/58x58.png",
+                        "settings@3x": "unpackage/res/icons/87x87.png",
+                        "spotlight@2x": "unpackage/res/icons/80x80.png",
+                        "spotlight@3x": "unpackage/res/icons/120x120.png"
+                    }
+                }
+            }
+        },
+        "nativePlugins": {
+            "Fvv-AutoStart": {
+                "__plugin_info__": {
+                    "name": "AutoStart",
+                    "description": "安卓开机自启动",
+                    "platforms": "Android",
+                    "url": "",
+                    "android_package_name": "uni.app.UNI1281306",
+                    "ios_bundle_id": "",
+                    "isCloud": false,
+                    "bought": -1,
+                    "pid": "",
+                    "parameters": {}
+                }
+            }
+        }
+    },
+    "quickapp": {},
+    "mp-weixin": {
+        "appid": "wx2d058e7b7a432d7b",
+        "setting": {
+            "urlCheck": false,
+            "minified": true,
+            "postcss": true,
+            "es6": true
+        },
+        "libVersion": "3.5.8",
+        "usingComponents": true,
+        "permission": {
+            "scope.userLocation": {
+                "desc": "你的位置信息将用于小程序位置接口的效果展示"
+            }
+        }
+    },
+    "mp-alipay": {
+        "usingComponents": true
+    },
+    "mp-baidu": {
+        "usingComponents": true
+    },
+    "mp-toutiao": {
+        "usingComponents": true
+    },
+    "uniStatistics": {
+        "enable": false
+    },
+    "h5": {
+        "devServer": {
+            "port": 8081,
+            "disableHostCheck": true,
+            "proxy": {
+                "/api": {
+                    "target": "https://toystory-test.nextclass.com",
+                    "changeOrigin": true,
+                    "secure": "false",
+                    "pathRewrite": {
+                        "^/api": "/"
+                    }
+                }
+            }
+        }
+    },
+    "vueVersion": "3"
+}

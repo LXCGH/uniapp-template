@@ -1,0 +1,12 @@
+{
+  "extEnable": false,
+  "extAppid": "wxc1e461532b45a960",
+  "directCommit": true,
+  "ext": {
+    "name": "123123",
+    "attr": {
+      "host": "open.weixin.qq.com",
+      "users": ["user_1", "user_2"]
+    }
+  }
+}

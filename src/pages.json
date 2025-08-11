@@ -1,0 +1,48 @@
+{
+  "pages": [
+    {
+      "path": "pages/index/index",
+      "style": {
+        "navigationBarTitleText": "工作台",
+        "enablePullDownRefresh": false,
+        "disableScroll": true
+      }
+    },
+    {
+      "path": "pages/login/index",
+      "style": {
+        "navigationBarTitleText": "登录"
+      }
+    },
+    {
+      "path": "pages/personal/index",
+      "style": {
+        "navigationBarTitleText": "个人中心"
+      }
+    }
+  ],
+  "globalStyle": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "",
+    "navigationBarBackgroundColor": "#f7f7f7",
+    "backgroundColor": "#f7f7f7"
+  },
+  "tabBar": {
+    "selectedColor": "#2979ff",
+    "color": "#999999",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "工作台",
+        "iconPath": "static/images/tabs/home-inactive.png",
+        "selectedIconPath": "static/images/tabs/home-active.png"
+      },
+      {
+        "pagePath": "pages/personal/index",
+        "text": "我的",
+        "iconPath": "static/images/tabs/account-inactive.png",
+        "selectedIconPath": "static/images/tabs/account-active.png"
+      }
+    ]
+  }
+}
