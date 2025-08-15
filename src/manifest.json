@@ -1,5 +1,5 @@
 {
-    "name": "假期助手",
+    "name": "照片生成助手",
     "appid": "__UNI__1281306",
     "description": "BC TOYS",
     "versionName": "1.0.0",
@@ -127,7 +127,7 @@
     },
     "quickapp": {},
     "mp-weixin": {
-        "appid": "wx2d058e7b7a432d7b",
+        "appid": "wx675bd104caf43925",
         "setting": {
             "urlCheck": false,
             "minified": true,

@@ -23,12 +23,12 @@
   </view>
 </template>
 <script setup lang="ts">
-import { ref, defineEmits, defineExpose } from "vue";
+import { ref } from "vue";
 import { onPageShow } from "@dcloudio/uni-app";
 const privacyContractName = ref("隐私保护指引");
 const showPrivacy = ref(false);
 onPageShow(() => {
-  wx.getPrivacySetting({
+  uni.getPrivacySetting({
     success(res: any) {
       if (res.needAuthorization) {
         privacyContractName.value = res.privacyContractName;
@@ -47,9 +47,9 @@ defineExpose({
 });
 
 const openPrivacyContract = () => {
-  wx.openPrivacyContract({
+  uni.openPrivacyContract({
     fail: () => {
-      wx.showToast({
+      uni.showToast({
         title: "遇到错误",
         icon: "error",
       });
