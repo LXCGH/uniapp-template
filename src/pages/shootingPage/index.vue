@@ -8,8 +8,10 @@
     <camera class="camera-preview" :device-position="cameraPosition" flash="off" @error="onCameraError"
       @initdone="onCameraInit">
       <!-- 人物区域标识边框 -->
-      <cover-image src="https://img-blog.csdnimg.cn/20210126152753150.png"
-        style="width: 90%; height: 680rpx;margin:160rpx auto;" mode="widthFix"></cover-image>
+      <!-- <cover-image src="https://img-blog.csdnimg.cn/20210126152753150.png"
+        style="width: 90%; height: 680rpx;margin:160rpx auto;" mode="widthFix"></cover-image> -->
+      <cover-image src="/static/images/outline.png" style="width: 730rpx; height: 1095rpx;margin:160rpx auto;"
+        mode="widthFix"></cover-image>
     </camera>
 
     <!-- 底部控制栏 -->
@@ -35,7 +37,7 @@
 
     <!-- 拍照结果预览 -->
     <view class="photo-preview" v-if="photoPath" @tap="hidePreview">
-      <image :src="photoPath" mode="aspectFit" class="preview-image" />
+      <image :src="photoPath" class="preview-image" mode="aspectFill" />
       <view class="preview-actions">
         <button class="action-btn retake" @tap="retakePhoto">重拍</button>
         <button class="action-btn confirm" @tap="confirmPhoto">确认</button>
@@ -53,7 +55,7 @@ const showTip = ref(true)
 const tipText = ref('站在纯色背景前，拍摄效果最佳')
 const photoPath = ref('')
 const cameraContext = ref<any>(null)
-const cameraPosition = ref<'front' | 'back'>('back')
+const cameraPosition = ref<'front' | 'back'>('front')
 
 // 时间更新定时器
 let timeTimer: any = null
@@ -267,23 +269,23 @@ function confirmPhoto() {
 
 // 照片预览
 .photo-preview {
+  display: block; /* 让子元素绝对定位更直观 */
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  top: 0; left: 0; right: 0; bottom: 0;
   background: #000;
   z-index: 100;
-  display: flex;
-  flex-direction: column;
 }
 
 .preview-image {
-  flex: 1;
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
   width: 100%;
+  height: 100%;
 }
 
 .preview-actions {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
   height: 200rpx;
   display: flex;
   align-items: center;
