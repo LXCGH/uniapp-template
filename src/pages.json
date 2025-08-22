@@ -37,6 +37,12 @@
             "style": {
                 "navigationBarTitleText": "拍照"
             }
+        },
+        {
+            "path": "pages/customSize/index",
+            "style": {
+                "navigationBarTitleText": "自定义尺寸"
+            }
         }
     ],
     "globalStyle": {

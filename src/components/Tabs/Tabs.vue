@@ -4,7 +4,7 @@
       v-for="it in normalized"
       :key="it.value"
       class="tabs-grid__item"
-      :class="{ active: it.value === innerValue }"
+      :class="{ active: it.value === innerValue && it.value !== 'custom' }"
       @tap="select(it.value)"
     >
       <image v-if="it.icon" :src="it.icon" class="tabs-grid__icon" mode="aspectFit" />
@@ -97,6 +97,10 @@ watchEffect(() => {
 })
 
 function select(v: string | number) {
+  if (v === 'custom') {
+    uni.navigateTo({ url: `/pages/customSize/index` })
+    return
+  }
   if (v === innerValue.value) return
   innerValue.value = v
   const item = normalized.value.find(i => i.value === v)
