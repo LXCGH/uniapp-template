@@ -49,8 +49,7 @@
           <text class="row-label">是否更换背景</text>
           <text class="row-sub">开启后可选择精修背景色</text>
         </view>
-        <switch :checked="bgEnabled" color="#FD5B38" style="transform:scale(0.8)"
-          @change="e => bgEnabled = e.detail.value" />
+        <switch :checked="bgEnabled" color="#FD5B38" style="transform:scale(0.8)" @change="onSwitchChange" />
       </view>
 
       <view class="bg-select-area" v-if="bgEnabled">
@@ -68,7 +67,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed } from 'vue'
 import ColorPickerPanel from '@/components/ColorPickerPanel.vue'
 import ColorPickerModal from '@/components/ColorPickerModal.vue'
 
@@ -98,25 +97,17 @@ const SCALE = 0.5
 const previewW = computed(() => Math.max(1, Math.round(wStr.value * SCALE)))
 const previewH = computed(() => Math.max(1, Math.round(hStr.value * SCALE)))
 
-onMounted(() => {
-
-});
-
-const normalize = (which: 'w' | 'h') => {
-  // if (which === 'w') {
-  //   wStr.value = Math.max(1, Math.round(wStr.value * SCALE))
-  // } else {
-  //   hStr.value = Math.max(1, Math.round(hStr.value * SCALE))
-  // }
-}
-
 const unit = ref<'px' | 'mm'>('px')
-const dpi = ref(300) // 物理转换用，默认300DPI
 const unitLabel = computed(() => (unit.value === 'px' ? 'px' : 'mm'))
 
 function switchUnit(target: 'px' | 'mm') {
   unit.value = target
 }
+
+function onSwitchChange(e: any) {
+  bgEnabled.value = e.detail.value
+}
+
 
 
 function goNext() {
@@ -371,134 +362,5 @@ function goNext() {
 .next-btn.disabled {
   background: #e5e5e5;
   color: #bbb;
-}
-
-.color-mask {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.color-modal {
-  width: 600rpx;
-  background: #fff;
-  border-radius: 24rpx;
-  padding: 32rpx;
-  box-shadow: 0 10rpx 30rpx rgba(0, 0, 0, 0.2);
-
-  .modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 32rpx;
-
-    .modal-title {
-      font-size: 32rpx;
-      font-weight: bold;
-      color: #333;
-    }
-  }
-
-  .preview-box {
-    height: 120rpx;
-    border-radius: 16rpx;
-    margin-bottom: 32rpx;
-    border: 2rpx solid #eee;
-    box-shadow: inset 0 0 20rpx rgba(0, 0, 0, 0.05);
-  }
-
-  .slider-row {
-    margin-bottom: 32rpx;
-
-    .label {
-      font-size: 24rpx;
-      color: #666;
-      margin-bottom: 12rpx;
-      display: block;
-    }
-
-    .hue-slider {
-      background: linear-gradient(to right, red, #ff0, lime, cyan, blue, #f0f, red);
-      border-radius: 10rpx;
-    }
-  }
-
-  .input-row {
-    margin-bottom: 24rpx;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    .label {
-      width: 80rpx;
-      font-size: 26rpx;
-      color: #333;
-      text-align: center;
-    }
-
-    .hex-input {
-      flex: 1;
-      height: 72rpx;
-      background: #F5F7FA;
-      border-radius: 12rpx;
-      padding: 0 24rpx;
-      font-size: 28rpx;
-      color: #333;
-      text-align: center;
-    }
-  }
-
-  .rgb-row {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 40rpx;
-
-    .rgb-item {
-      width: 30%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-
-      .sub-label {
-        font-size: 20rpx;
-        color: #999;
-        margin-bottom: 8rpx;
-        text-align: center;
-      }
-
-      .num-input {
-        width: 100%;
-        height: 72rpx;
-        background: #F5F7FA;
-        border-radius: 12rpx;
-        text-align: center;
-        font-size: 28rpx;
-      }
-    }
-  }
-
-  .modal-footer {
-    margin-top: 20rpx;
-  }
-
-  .confirm-btn {
-    width: 100%;
-    height: 88rpx;
-    background: linear-gradient(90deg, #FD5B38 0%, #FF8F70 100%);
-    color: #fff;
-    border-radius: 44rpx;
-    font-size: 30rpx;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
 }
 </style>
