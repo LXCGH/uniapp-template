@@ -5,31 +5,36 @@
             "style": {
                 "navigationBarTitleText": "工作台",
                 "enablePullDownRefresh": false,
-                "disableScroll": true
+                "disableScroll": true,
+                "navigationStyle": "custom"
             }
         },
         {
             "path": "pages/login/index",
             "style": {
-                "navigationBarTitleText": "登录"
+                "navigationBarTitleText": "登录",
+                "navigationStyle": "custom"
             }
         },
         {
             "path": "pages/order/index",
             "style": {
-                "navigationBarTitleText": "订单"
+                "navigationBarTitleText": "订单",
+                "navigationStyle": "custom"
             }
         },
         {
             "path": "pages/personal/index",
             "style": {
-                "navigationBarTitleText": "个人中心"
+                "navigationBarTitleText": "个人中心",
+                "navigationStyle": "custom"
             }
         },
         {
             "path": "pages/specifications/index",
             "style": {
-                "navigationBarTitleText": "规格详情"
+                "navigationBarTitleText": "规格详情",
+                "navigationStyle": "custom"
             }
         },
         {
@@ -39,9 +44,39 @@
             }
         },
         {
+            "path": "pages/photo/edit",
+            "style": {
+                "navigationBarTitleText": "编辑照片",
+                "navigationBarBackgroundColor": "#fff",
+                "navigationBarTextStyle": "black"
+            }
+        },
+        {
             "path": "pages/customSize/index",
             "style": {
                 "navigationBarTitleText": "自定义尺寸"
+            }
+        },
+        {
+            "path": "pages/result/index",
+            "style": {
+                "navigationBarTitleText": "制作结果",
+                "navigationBarBackgroundColor": "#F6F7F9",
+                "navigationBarTextStyle": "black"
+            }
+        },
+        {
+            "path": "pages/order/create",
+            "style": {
+                "navigationBarTitleText": "确认订单",
+                "navigationStyle": "custom"
+            }
+        },
+        {
+            "path": "pages/order/detail",
+            "style": {
+                "navigationBarTitleText": "订单详情",
+                "navigationStyle": "custom"
             }
         }
     ],

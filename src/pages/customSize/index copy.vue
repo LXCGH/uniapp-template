@@ -53,7 +53,7 @@
 <script setup lang="ts">
 import { ref, computed, watch, onMounted } from 'vue'
 
-const imgSrc = '/static/images/photo.png' // 可替换为实际预览图/裁剪后图
+const imgSrc = 'https://7072-prod-6g78fa1tc0ccbc21-1328661334.tcb.qcloud.la/photo.png?sign=3c8de54485ef7db41c94ed4e16c78ede&t=1767864354' // 可替换为实际预览图/裁剪后图
 
 // 单位与数值
 const unit = ref<'px' | 'mm'>('px')

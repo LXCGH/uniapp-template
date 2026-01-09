@@ -10,7 +10,9 @@
         </view>
         <scroll-view class="card" scroll-x="true" scroll-y="true">
           <view class=""></view>
-          <image class="photo" :style="{ width: previewW + 'px', height: previewH + 'px' }" :src="imgSrc" />
+          <image class="photo"
+            :style="{ width: previewW + 'px', height: previewH + 'px', backgroundColor: bgEnabled ? bgColor : '#d8e7ff' }"
+            :src="imgSrc" mode="widthFix" />
         </scroll-view>
       </view>
       <view class="ruler-horizontal">
@@ -42,23 +44,54 @@
         </view>
       </view>
 
+      <view class="bg-toggle-row">
+        <view class="row-left">
+          <text class="row-label">是否更换背景</text>
+          <text class="row-sub">开启后可选择精修背景色</text>
+        </view>
+        <switch :checked="bgEnabled" color="#FD5B38" style="transform:scale(0.8)"
+          @change="e => bgEnabled = e.detail.value" />
+      </view>
+
+      <view class="bg-select-area" v-if="bgEnabled">
+        <ColorPickerPanel v-model="bgColor" @custom="handleCustomColor" />
+      </view>
+
       <button class="next-btn" :class="{ disabled: !valid }" :disabled="!valid" @tap="goNext">
         下一步
       </button>
     </view>
+
+    <!-- Custom Color Picker Modal -->
+    <ColorPickerModal v-model="showColorPicker" :initial-color="bgColor" @confirm="onConfirmCustomColor" />
   </view>
 </template>
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
+import ColorPickerPanel from '@/components/ColorPickerPanel.vue'
+import ColorPickerModal from '@/components/ColorPickerModal.vue'
 
-const imgSrc = '/static/images/photo.png'
+const imgSrc = 'https://7072-prod-6g78fa1tc0ccbc21-1328661334.tcb.qcloud.la/photo.png?sign=3c8de54485ef7db41c94ed4e16c78ede&t=1767864354'
 
 const valid = ref(true)
 const defaultW = ref(295)
 const defaultH = ref(413)
 const wStr = ref(defaultW.value)
 const hStr = ref(defaultH.value)
+
+// Background Logic
+const bgEnabled = ref(false)
+const bgColor = ref('#ffffff')
+const showColorPicker = ref(false)
+
+const handleCustomColor = () => {
+  showColorPicker.value = true
+}
+
+const onConfirmCustomColor = (hex: string) => {
+  bgColor.value = hex
+}
 
 // 预览尺寸：固定按 1/2 比例显示（px）
 const SCALE = 0.5
@@ -87,15 +120,23 @@ function switchUnit(target: 'px' | 'mm') {
 
 
 function goNext() {
-  const params = {
-    width: 0,
-    height: 0,
+  const params: any = {
+    width: wStr.value, // Use actual values
+    height: hStr.value,
     unit: 'px'
   }
+
+  // Pass bgColor if enabled
+  if (bgEnabled.value) {
+    params.bgColor = bgColor.value
+  }
+
   const query = encodeURIComponent(JSON.stringify(params))
   uni.navigateTo({ url: `/pages/photo/edit?custom=${query}` })
 }
 </script>
+
+
 
 <style scoped lang="scss">
 .custom-page {
@@ -239,12 +280,47 @@ function goNext() {
   align-items: center;
   justify-content: center;
   gap: 24rpx;
-  margin: 20rpx 0 32rpx;
+  margin: 20rpx 0 80rpx;
 }
 
 .times {
   color: #999;
   font-size: 34rpx;
+}
+
+/* Background Select Styles */
+.bg-toggle-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f6f6f6;
+  padding: 24rpx;
+  border-radius: 16rpx;
+  margin-bottom: 24rpx;
+
+  .row-left {
+    display: flex;
+    flex-direction: column;
+
+    .row-label {
+      font-size: 28rpx;
+      color: #333;
+      font-weight: 500;
+    }
+
+    .row-sub {
+      font-size: 22rpx;
+      color: #999;
+      margin-top: 4rpx;
+    }
+  }
+}
+
+.bg-select-area {
+  margin-bottom: 24rpx;
+  padding: 0 10rpx;
+  display: flex;
+  justify-content: center;
 }
 
 .input-item {
@@ -295,5 +371,134 @@ function goNext() {
 .next-btn.disabled {
   background: #e5e5e5;
   color: #bbb;
+}
+
+.color-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.color-modal {
+  width: 600rpx;
+  background: #fff;
+  border-radius: 24rpx;
+  padding: 32rpx;
+  box-shadow: 0 10rpx 30rpx rgba(0, 0, 0, 0.2);
+
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32rpx;
+
+    .modal-title {
+      font-size: 32rpx;
+      font-weight: bold;
+      color: #333;
+    }
+  }
+
+  .preview-box {
+    height: 120rpx;
+    border-radius: 16rpx;
+    margin-bottom: 32rpx;
+    border: 2rpx solid #eee;
+    box-shadow: inset 0 0 20rpx rgba(0, 0, 0, 0.05);
+  }
+
+  .slider-row {
+    margin-bottom: 32rpx;
+
+    .label {
+      font-size: 24rpx;
+      color: #666;
+      margin-bottom: 12rpx;
+      display: block;
+    }
+
+    .hue-slider {
+      background: linear-gradient(to right, red, #ff0, lime, cyan, blue, #f0f, red);
+      border-radius: 10rpx;
+    }
+  }
+
+  .input-row {
+    margin-bottom: 24rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .label {
+      width: 80rpx;
+      font-size: 26rpx;
+      color: #333;
+      text-align: center;
+    }
+
+    .hex-input {
+      flex: 1;
+      height: 72rpx;
+      background: #F5F7FA;
+      border-radius: 12rpx;
+      padding: 0 24rpx;
+      font-size: 28rpx;
+      color: #333;
+      text-align: center;
+    }
+  }
+
+  .rgb-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 40rpx;
+
+    .rgb-item {
+      width: 30%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .sub-label {
+        font-size: 20rpx;
+        color: #999;
+        margin-bottom: 8rpx;
+        text-align: center;
+      }
+
+      .num-input {
+        width: 100%;
+        height: 72rpx;
+        background: #F5F7FA;
+        border-radius: 12rpx;
+        text-align: center;
+        font-size: 28rpx;
+      }
+    }
+  }
+
+  .modal-footer {
+    margin-top: 20rpx;
+  }
+
+  .confirm-btn {
+    width: 100%;
+    height: 88rpx;
+    background: linear-gradient(90deg, #FD5B38 0%, #FF8F70 100%);
+    color: #fff;
+    border-radius: 44rpx;
+    font-size: 30rpx;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }
 </style>

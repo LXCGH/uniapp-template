@@ -10,8 +10,9 @@
       <!-- 人物区域标识边框 -->
       <!-- <cover-image src="https://img-blog.csdnimg.cn/20210126152753150.png"
         style="width: 90%; height: 680rpx;margin:160rpx auto;" mode="widthFix"></cover-image> -->
-      <cover-image src="/static/images/outline.png" style="width: 730rpx; height: 1095rpx;margin:160rpx auto;"
-        mode="widthFix"></cover-image>
+      <cover-image
+        src="https://7072-prod-6g78fa1tc0ccbc21-1328661334.tcb.qcloud.la/outline.png?sign=e4d9dd8f4995be1bef9c73eee82d479b&t=1767864703"
+        style="width: 730rpx; height: 1095rpx;margin:160rpx auto;" mode="widthFix"></cover-image>
     </camera>
 
     <!-- 底部控制栏 -->
@@ -68,6 +69,8 @@ onMounted(() => {
   cameraContext.value = uni.createCameraContext()
 })
 
+
+
 onUnmounted(() => {
   if (timeTimer) {
     clearInterval(timeTimer)
@@ -90,9 +93,34 @@ function onCameraInit() {
 // 摄像头错误处理
 function onCameraError(e: any) {
   console.error('摄像头错误:', e.detail)
-  uni.showToast({
-    title: '摄像头启动失败',
-    icon: 'error'
+
+  // Check permission on error - only prompt if denied
+  uni.getSetting({
+    success(res) {
+      if (!res.authSetting['scope.camera']) {
+        uni.showModal({
+          title: '提示',
+          content: '拍摄证件照需要使用摄像头，请授权',
+          success: function (res) {
+            if (res.confirm) {
+              uni.openSetting({
+                success(settingRes) {
+                  if (settingRes.authSetting['scope.camera']) {
+                    uni.showToast({ title: '授权成功', icon: 'success' })
+                  } else {
+                    uni.showToast({ title: '未授权', icon: 'none' })
+                  }
+                }
+              })
+            } else if (res.cancel) {
+              uni.navigateBack()
+            }
+          }
+        })
+      } else {
+        uni.showToast({ title: '摄像头启动失败', icon: 'error' })
+      }
+    }
   })
 }
 
@@ -269,23 +297,32 @@ function confirmPhoto() {
 
 // 照片预览
 .photo-preview {
-  display: block; /* 让子元素绝对定位更直观 */
+  display: block;
+  /* 让子元素绝对定位更直观 */
   position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   background: #000;
   z-index: 100;
 }
 
 .preview-image {
   position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   width: 100%;
   height: 100%;
 }
 
 .preview-actions {
   position: absolute;
-  left: 0; right: 0; bottom: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   height: 200rpx;
   display: flex;
   align-items: center;

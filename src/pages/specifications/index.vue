@@ -1,413 +1,538 @@
 <template>
-  <view class="spec-detail-page">
-    <!-- 拍摄须知卡片 -->
-    <view class="instruction-card">
-      <view class="card-title">拍摄须知</view>
-      <view class="instruction-content">
-        <view class="instruction-list">
-          <view class="instruction-item" v-for="(item, index) in instructions" :key="index">
-            <view class="instruction-number">{{ index + 1 }}</view>
-            <text class="instruction-text">{{ item }}</text>
+  <view class="spec-page">
+    <!-- Custom Nav Bar -->
+    <view class="nav-bar" :style="{ paddingTop: statusBarHeight + 'px' }">
+      <view class="nav-content">
+        <view class="back-btn" @click="goBack">
+          <image src="/static/images/left-back.png" mode="aspectFit" class="back-icon" />
+        </view>
+        <text class="nav-title">规格参数</text>
+      </view>
+    </view>
+
+    <!-- Main Scroll Content -->
+    <scroll-view class="main-content" scroll-y :style="{ paddingTop: (statusBarHeight + 44) + 'px' }">
+
+      <!-- Top Card: Title & Specs -->
+      <view class="header-card">
+        <view class="title-row">
+          <text class="spec-title">{{ specInfo.title }}</text>
+          <view class="tag-row">
+            <text class="feature-tag" v-for="(feat, idx) in specInfo.features" :key="idx">{{ feat }}</text>
           </view>
         </view>
-        <view class="instruction-images">
-          <image src="/static/images/photo.png" class="example-image" />
-        </view>
-      </view>
-    </view>
 
-    <!-- 规格详情卡片 -->
-    <view class="spec-card">
-      <view class="card-title">
-        <view class="title-icon"></view>
-        {{ specInfo.title }}
-      </view>
-
-      <!-- 功能特性 -->
-      <view class="features">
-        <view class="feature-item" v-for="feature in specInfo.features" :key="feature">
-          <uni-icons type="checkmarkempty" size="16" color="var(--color-primary)" />
-          <text class="feature-text">{{ feature }}</text>
-        </view>
-      </view>
-
-      <!-- 规格参数 -->
-      <view class="spec-params">
-        <view class="param-item" v-for="param in specInfo.params" :key="param.label">
-          <text class="param-label">{{ param.label }}</text>
-          <text class="param-value">{{ param.value }}</text>
+        <view class="param-grid">
+          <view class="param-item">
+            <text class="label">尺寸(mm)</text>
+            <text class="value">{{ specInfo.params[0].value }}</text>
+          </view>
+          <view class="param-item">
+            <text class="label">像素(px)</text>
+            <text class="value">{{ specInfo.params[1].value }}</text>
+          </view>
+          <view class="param-item">
+            <text class="label">分辨率</text>
+            <text class="value">{{ specInfo.params[2].value }}</text>
+          </view>
+          <view class="param-item">
+            <text class="label">文件格式</text>
+            <text class="value">{{ specInfo.params[3].value }}</text>
+          </view>
         </view>
       </view>
 
-      <!-- 背景色选择 -->
-      <view class="background-colors">
-        <text class="param-label">背景颜色</text>
-        <view class="color-list">
-          <view class="color-item" v-for="color in backgroundColors" :key="color.value"
-            :class="{ active: selectedBgColor === color.value }" :style="{ backgroundColor: color.value }"
-            @tap="selectBgColor(color.value)"></view>
+      <!-- Color Selection -->
+      <view class="section-card">
+        <text class="section-title">推荐背景色</text>
+        <ColorPickerPanel v-model="selectedBgColor" @custom="selectBgColor('custom')" />
+      </view>
+
+      <!-- Instructions "Tips" -->
+      <view class="section-card">
+        <view class="card-header">
+          <text class="section-title">拍摄须知</text>
+          <text class="link-btn" @click="showExample">查看示例 ></text>
+        </view>
+
+        <!-- Example Photo Display -->
+        <!-- Example Photo Display -->
+        <view class="example-area">
+          <view class="image-wrapper" :style="{ backgroundColor: selectedBgColor }">
+            <image
+              src="https://7072-prod-6g78fa1tc0ccbc21-1328661334.tcb.qcloud.la/photo.png?sign=3c8de54485ef7db41c94ed4e16c78ede&t=1767864354"
+              class="example-img" mode="aspectFit" />
+          </view>
+          <text class="example-tip">预览效果：实际制作时AI会自动抠图去除原背景</text>
+        </view>
+        <view class="instruction-row">
+          <view class="instruction-step">
+            <view class="icon-box">
+              <uni-icons type="info-filled" size="32" color="#FD5B38" />
+            </view>
+            <text class="step-text">光线充足</text>
+          </view>
+          <view class="arrow-divider">></view>
+          <view class="instruction-step">
+            <view class="icon-box">
+              <uni-icons type="person-filled" size="32" color="#FD5B38" />
+            </view>
+            <text class="step-text">正对镜头</text>
+          </view>
+          <view class="arrow-divider">></view>
+          <view class="instruction-step">
+            <view class="icon-box">
+              <uni-icons type="eye-filled" size="32" color="#FD5B38" />
+            </view>
+            <text class="step-text">不戴眼镜</text>
+          </view>
+        </view>
+        <view class="tips-box">
+          <text class="tips-content">{{ specInfo.requirements }}</text>
         </view>
       </view>
 
-      <!-- 其他要求 -->
-      <view class="requirements">
-        <text class="requirements-title">其他要求</text>
-        <text class="requirements-text">{{ specInfo.requirements }}</text>
-      </view>
-    </view>
+      <!-- Bottom Spacer -->
+      <view class="safe-area-bottom"></view>
+    </scroll-view>
 
-    <!-- 底部操作按钮 -->
-    <view class="action-buttons">
-      <button class="btn btn-secondary" @tap="selectFromAlbum">
-        <uni-icons type="image" size="20" color="#666" />
-        <text>从相册中选取</text>
+    <!-- Bottom Action Bar -->
+    <view class="bottom-bar safe-area-padding">
+      <button class="action-btn album-btn" @click="selectFromAlbum">
+        <text>相册上传</text>
       </button>
-      <button class="btn btn-primary" @tap="startCamera">
-        <uni-icons type="camera" size="20" color="#fff" />
-        <text>拍摄</text>
+      <button class="action-btn camera-btn" @click="startCamera">
+        <text>直接拍摄</text>
       </button>
     </view>
+    <!-- Custom Color Picker Modal -->
+    <ColorPickerModal v-model="showColorPicker" :initial-color="selectedBgColor" @confirm="onConfirmCustomColor" />
   </view>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
+import ColorPickerPanel from '@/components/ColorPickerPanel.vue'
+import ColorPickerModal from '@/components/ColorPickerModal.vue'
 
-// 拍摄须知
-const instructions = [
-  '站白墙(纯色)前,光线充足均匀',
-  '头部居中,正对镜头',
-  '露出眉毛和耳朵,面部无遮挡',
-  '优先使用后置摄像头拍摄'
-]
+const statusBarHeight = ref(20)
+const selectedBgColor = ref('#438edb') // Default blue usually
+const showColorPicker = ref(false)
 
-// 背景色选项
-const backgroundColors = [
-  { value: '#e55757', label: '红色' },
-  { value: '#ffffff', label: '白色' },
-  { value: '#ff0000', label: '红色' },
-  { value: '#448edb', label: '深蓝' },
-  { value: '#74c0fb', label: '浅蓝' },
-  { value: '#808080', label: '灰色' },
-  { value: '#0074ff', label: '天蓝' },
-  { value: '#8b0000', label: '深红' }
-]
-
-const selectedBgColor = ref('#dd4238')
-
-// 规格信息
+// Data Structure
 const specInfo = ref({
-  title: '教师资格证 (384x512)',
-  features: ['支持保存电子照', '支持冲印'],
+  title: '加载中...',
+  features: ['高清无损', '智能排版'],
   params: [
-    { label: '打印尺寸', value: '32x43' },
-    { label: '像素大小', value: '384x512' },
+    { label: '打印尺寸', value: '--' },
+    { label: '像素大小', value: '--' },
     { label: '分辨率', value: '300DPI' },
     { label: '文件格式', value: 'JPG' }
   ],
-  requirements: '建议不要佩戴眼镜。为了保障您能够顺利报名考试,证件照下单后,请不要直接把证件照保存至手机(会压缩图片大小),用"发送到邮箱"或"提取下载"的方式进行照片下载。下载照片、报名全程电脑操作。'
+  requirements: '请站在白墙或纯色背景前拍摄；头部居中，露出双耳和眉毛；光线均匀，避免阴阳脸。'
 })
 
 onMounted(() => {
-  // 获取路由参数，设置对应的规格信息
+  uni.getSystemInfo({
+    success: (res) => {
+      statusBarHeight.value = res.statusBarHeight || 20
+    }
+  })
+
+  // Parse params
   const pages = getCurrentPages()
   const currentPage = pages[pages.length - 1] as any
   const specItemStr = currentPage.options?.item
-  console.log(specItemStr)
-
   if (specItemStr) {
-    // 根据 specId 设置对应的规格信息
-    setSpecInfo(specItemStr)
+    const item = JSON.parse(specItemStr)
+    specInfo.value.title = item.title
+    specInfo.value.params[0].value = item.sizeMM
+    specInfo.value.params[1].value = item.pixel
+
+    // Auto select color based on type if possible, else default blue
+    if (item.title.includes('签证')) selectedBgColor.value = '#ffffff'
+    else if (item.title.includes('结婚')) selectedBgColor.value = '#d9001b'
   }
 })
 
-type SpecItem = {
-  id: string
-  title: string
-  sizeMM: string
-  pixel: string
+const goBack = () => {
+  uni.navigateBack()
 }
 
-function setSpecInfo(specItemStr: string) {
-  const specItem = JSON.parse(specItemStr) as SpecItem
-  if (specItem) {
-    specInfo.value = {
-      title: specItem.title,
-      features: ['支持保存电子照', '支持冲印'],
-      params: [
-        { label: '打印尺寸', value: specItem.sizeMM },
-        { label: '像素大小', value: specItem.pixel },
-        { label: '分辨率', value: '300DPI' },
-        { label: '文件格式', value: 'JPG' }
-      ],
-      requirements: '建议不要佩戴眼镜。为了保障您能够顺利报名考试,证件照下单后,请不要直接把证件照保存至手机(会压缩图片大小),用"发送到邮箱"或"提取下载"的方式进行照片下载。下载照片、报名全程电脑操作。'
-    }
+const selectBgColor = (val: string) => {
+  if (val === 'custom') {
+    showColorPicker.value = true
+  } else {
+    selectedBgColor.value = val
   }
 }
 
-function selectBgColor(color: string) {
-  selectedBgColor.value = color
+const onConfirmCustomColor = (hex: string) => {
+  selectedBgColor.value = hex
 }
 
-function selectFromAlbum() {
+const showExample = () => {
+  uni.previewImage({
+    urls: ['/static/images/photo.png']
+  })
+}
+
+const selectFromAlbum = () => {
   uni.chooseImage({
     count: 1,
     sizeType: ['original'],
     sourceType: ['album'],
     success: (res) => {
-      // 处理选择的图片
-      console.log('选择的图片:', res.tempFilePaths[0])
-      // 跳转到编辑页面
+      const path = res.tempFilePaths[0]
       uni.navigateTo({
-        url: `/pages/photo/edit?image=${res.tempFilePaths[0]}&bgColor=${selectedBgColor.value}`
+        url: `/pages/photo/edit?image=${path}&bgColor=${selectedBgColor.value}`
       })
     }
   })
 }
 
-function startCamera() {
-  // uni.chooseImage({
-  //   count: 1,
-  //   sizeType: ['original'],
-  //   sourceType: ['camera'],
-  //   success: (res) => {
-  //     // 处理拍摄的图片
-  //     console.log('拍摄的图片:', res.tempFilePaths[0])
-  //     // 跳转到编辑页面
-  //     uni.navigateTo({
-  //       url: `/pages/photo/edit?image=${res.tempFilePaths[0]}&bgColor=${selectedBgColor.value}`
-  //     })
-  //   }
-  // })
+const startCamera = () => {
+  const finalColor = selectedBgColor.value === 'custom' ? '#ffffff' : selectedBgColor.value // Fallback if still 'custom' string (shouldn't happen with logic)
   uni.navigateTo({
-    url: `/pages/shootingPage/index?bgColor=${selectedBgColor.value}`
+    url: `/pages/shootingPage/index?bgColor=${finalColor}`
   })
 }
 </script>
 
-<style scoped lang="scss">
-.spec-detail-page {
+<style lang="scss" scoped>
+.spec-page {
   min-height: 100vh;
-  background-color: #f5f5f5;
-  padding: 24rpx;
-  padding-bottom: 120rpx;
+  background-color: #F6F7F9;
+  display: flex;
+  flex-direction: column;
 }
 
-// 卡片通用样式
-.instruction-card,
-.spec-card {
+.nav-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
   background: #fff;
-  border-radius: 16rpx;
+  z-index: 100;
+
+  .nav-content {
+    height: 44px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 10rpx;
+
+    .back-btn {
+      position: absolute;
+      left: 10rpx;
+      top: 0;
+      bottom: 0;
+      width: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .back-icon {
+        width: 32rpx;
+        height: 32rpx;
+      }
+    }
+
+    .nav-title {
+      font-size: 32rpx;
+      font-weight: 600;
+      color: #333;
+    }
+
+  }
+}
+
+.main-content {
+  flex: 1;
+  padding: 24rpx;
+  box-sizing: border-box;
+  padding-bottom: 200rpx; // Space for bottom bar
+}
+
+.header-card {
+  background: #fff;
+  border-radius: 24rpx;
+  padding: 40rpx 32rpx;
+  margin-bottom: 24rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.02);
+
+  .title-row {
+    text-align: center;
+    margin-bottom: 40rpx;
+
+    .spec-title {
+      font-size: 40rpx;
+      font-weight: bold;
+      color: #333;
+      display: block;
+      margin-bottom: 16rpx;
+    }
+
+    .tag-row {
+      display: flex;
+      justify-content: center;
+      gap: 12rpx;
+
+      .feature-tag {
+        font-size: 20rpx;
+        color: #FD5B38;
+        background: rgba(253, 91, 56, 0.1);
+        padding: 4rpx 12rpx;
+        border-radius: 8rpx;
+      }
+    }
+  }
+
+  .param-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24rpx;
+    background: #FAFAFA;
+    padding: 24rpx;
+    border-radius: 16rpx;
+
+    .param-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .label {
+        font-size: 24rpx;
+        color: #999;
+        margin-bottom: 8rpx;
+      }
+
+      .value {
+        font-size: 28rpx;
+        font-weight: 600;
+        color: #333;
+      }
+    }
+  }
+}
+
+.section-card {
+  background: #fff;
+  border-radius: 24rpx;
   padding: 32rpx;
   margin-bottom: 24rpx;
-  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05);
-}
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.02);
 
-.card-title {
-  font-size: 32rpx;
-  font-weight: 600;
-  color: #333;
-  margin-bottom: 24rpx;
-  display: flex;
-  align-items: center;
-
-  .title-icon {
-    width: 8rpx;
-    height: 32rpx;
-    background: var(--color-primary);
-    border-radius: 4rpx;
-    margin-right: 16rpx;
+  .section-title {
+    font-size: 30rpx;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 24rpx;
+    display: block;
   }
 }
 
-// 拍摄须知样式
-.instruction-content {
+.color-scroll {
   display: flex;
-  gap: 32rpx;
-}
+  justify-content: space-between;
+  padding: 10rpx 0;
 
-.instruction-list {
-  flex: 1;
-}
+  .color-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
-.instruction-item {
-  display: flex;
-  align-items: flex-start;
-  margin-bottom: 20rpx;
+    .color-circle {
+      width: 80rpx;
+      height: 80rpx;
+      border-radius: 40rpx;
+      margin-bottom: 12rpx;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      box-shadow: 0 4rpx 10rpx rgba(0, 0, 0, 0.1);
 
-  &:last-child {
-    margin-bottom: 0;
+      /* Spectrum/Rainbow Effect for Custom Option */
+      &.is-custom {
+        background: conic-gradient(red, orange, yellow, green, blue, indigo, violet, red);
+      }
+
+      /* Reset icon line-height to prevent vertical offset */
+      :deep(.uni-icons) {
+        line-height: 1;
+        display: flex;
+      }
+    }
+
+    .color-name {
+      font-size: 24rpx;
+      color: #666;
+    }
+
+    &.active {
+      .color-circle {
+        transform: scale(1.1);
+        box-shadow: 0 8rpx 16rpx rgba(253, 91, 56, 0.2);
+      }
+
+      .color-name {
+        color: #FD5B38;
+        font-weight: 500;
+      }
+    }
   }
 }
 
-.instruction-number {
-  width: 40rpx;
-  height: 40rpx;
-  background: var(--color-primary);
-  color: #fff;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 24rpx;
-  font-weight: 500;
-  margin-right: 16rpx;
-  flex-shrink: 0;
-}
-
-.instruction-text {
-  font-size: 28rpx;
-  color: #666;
-  line-height: 1.5;
-  flex: 1;
-}
-
-.instruction-images {
-  width: 200rpx;
-  flex-shrink: 0;
-}
-
-.example-image {
-  width: auto;
-  height: 240rpx;
-  border-radius: 12rpx;
-  // background: var(--color-primary);
-}
-
-// 功能特性样式
-.features {
-  display: flex;
-  gap: 32rpx;
-  margin-bottom: 32rpx;
-}
-
-.feature-item {
-  display: flex;
-  align-items: center;
-  gap: 8rpx;
-}
-
-.feature-text {
-  font-size: 26rpx;
-  color: #666;
-}
-
-// 规格参数样式
-.spec-params {
-  margin-bottom: 32rpx;
-}
-
-.param-item {
+.card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 16rpx 0;
-  border-bottom: 1rpx solid #f0f0f0;
+  margin-bottom: 30rpx;
 
-  &:last-child {
-    border-bottom: none;
+  .section-title {
+    margin-bottom: 0;
+  }
+
+  .link-btn {
+    font-size: 24rpx;
+    color: #FD5B38;
   }
 }
 
-.param-label {
-  font-size: 28rpx;
-  color: #666;
-}
-
-.param-value {
-  font-size: 28rpx;
-  color: #333;
-  font-weight: 500;
-}
-
-// 背景色选择样式
-.background-colors {
-  margin-bottom: 32rpx;
-}
-
-.color-list {
+.instruction-row {
   display: flex;
-  gap: 16rpx;
-  margin-top: 16rpx;
-  flex-wrap: wrap;
-}
+  justify-content: space-around;
+  align-items: flex-start;
+  margin-bottom: 30rpx;
 
-.color-item {
-  width: 60rpx;
-  height: 60rpx;
-  border-radius: 50%;
-  border: 4rpx solid transparent;
-  transition: all 0.2s ease;
+  .instruction-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 33%;
+    /* Ensure equal width for centering */
 
-  &.active {
-    border-color: var(--color-primary);
-    transform: scale(1.1);
+    .icon-box {
+      width: 64rpx;
+      height: 64rpx;
+      margin-bottom: 16rpx;
+      /* Increased margin as requested */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #FFF5E5;
+      /* Light orange bg for icon */
+      border-radius: 50%;
+    }
+
+    .step-text {
+      font-size: 24rpx;
+      color: #333;
+      text-align: center;
+    }
+  }
+
+  .arrow-divider {
+    color: #e0e0e0;
+    font-size: 32rpx;
+    font-weight: 300;
+    margin-top: 68rpx;
   }
 }
 
-// 其他要求样式
-.requirements {
-  background: #f8f8f8;
+.example-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 32rpx;
+
+  .image-wrapper {
+    width: 240rpx;
+    height: 320rpx;
+    border-radius: 20rpx;
+    overflow: hidden;
+    /* Clip the image to radius */
+    transition: background-color 0.3s ease;
+    box-shadow: 0 8rpx 24rpx rgba(0, 0, 0, 0.06);
+
+    .example-img {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+  }
+
+  .example-tip {
+    font-size: 22rpx;
+    color: #999;
+    margin-top: 16rpx;
+    background: #F5F7FA;
+    padding: 6rpx 20rpx;
+    border-radius: 20rpx;
+  }
+}
+
+.tips-box {
+  background: #FFF5E5;
   padding: 24rpx;
   border-radius: 12rpx;
+
+  .tips-content {
+    font-size: 24rpx;
+    color: #B9761E;
+    line-height: 1.6;
+    text-align: justify;
+  }
 }
 
-.requirements-title {
-  font-size: 28rpx;
-  color: #333;
-  font-weight: 500;
-  margin-bottom: 12rpx;
-  display: block;
+.safe-area-bottom {
+  height: 40rpx;
+  width: 100%;
 }
 
-.requirements-text {
-  font-size: 26rpx;
-  color: #666;
-  line-height: 1.6;
-}
-
-// 底部操作按钮样式
-.action-buttons {
+.bottom-bar {
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
   background: #fff;
-  padding: 24rpx;
   display: flex;
-  gap: 24rpx;
-  box-shadow: 0 -2rpx 8rpx rgba(0, 0, 0, 0.1);
-}
+  padding: 24rpx 32rpx;
+  padding-bottom: calc(24rpx + env(safe-area-inset-bottom));
+  box-shadow: 0 -4rpx 20rpx rgba(0, 0, 0, 0.05);
+  z-index: 100;
 
-.btn {
-  flex: 1;
-  height: 88rpx;
-  border-radius: 16rpx;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8rpx;
-  font-size: 30rpx;
-  font-weight: 500;
-  border: none;
-  transition: all 0.2s ease;
+  .action-btn {
+    flex: 1;
+    height: 88rpx;
+    border-radius: 44rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    font-size: 30rpx;
+    font-weight: 600;
 
-  &.btn-primary {
-    background: var(--color-primary);
-    color: #fff;
-
-    &:active {
-      background: rgba(221, 66, 56, 0.8);
+    &::after {
+      border: none;
     }
-  }
 
-  &.btn-secondary {
-    background: #fff;
-    color: #666;
-    border: 2rpx solid #e0e0e0;
+    &.album-btn {
+      background: #F5F7FA;
+      color: #333;
+      margin-right: 24rpx;
+    }
+
+    &.camera-btn {
+      background: linear-gradient(90deg, #FD5B38 0%, #FF8F70 100%);
+      color: #fff;
+      box-shadow: 0 8rpx 20rpx rgba(253, 91, 56, 0.3);
+    }
 
     &:active {
-      background: #f5f5f5;
+      opacity: 0.9;
     }
   }
 }

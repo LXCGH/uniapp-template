@@ -7,15 +7,17 @@ import productConfig from "./config/product";
 
 const manifest = require("./src/manifest.json");
 const pagesConfig = require("./src/pages.json");
-const customAppid = process.argv.includes("--appid") ? process.argv[process.argv.indexOf("--appid") + 1].replace("--appid=", "") : "oa";
+const customAppid = process.argv.includes("--appid") ? process.argv[process.argv.indexOf("--appid") + 1].replace("--appid=", "") : "photo";
 
 // console.log('appid', customAppid);
 // console.log('productConfig', productConfig);
 // console.log('customAppid', customAppid);
 
-const wxId = productConfig[customAppid].appid;
-const wxName = productConfig[customAppid].name;
-const tabBar = productConfig[customAppid].tabBarConfig;
+// 安全检查：如果配置不存在，使用默认配置
+const config = productConfig[customAppid] || productConfig.photo;
+const wxId = config.appid;
+const wxName = config.name;
+const tabBar = config.tabBarConfig;
 // console.log('wxId', wxId);
 // console.log('wxName', wxName);
 // 替换 App.vue 文件中的内容
